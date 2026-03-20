@@ -4,7 +4,7 @@ const app     = express()
 
 app.use(cors({
   origin: [
-    'http://localhost:5173',
+    'https://ngo-connect-backend.onrender.com',
     'https://ngo-sdg-platform.vercel.app'
   ]
 }))

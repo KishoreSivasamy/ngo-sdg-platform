@@ -37,7 +37,7 @@ exports.sendWelcomeEmail = async (name, email, role) => {
             </ul>
           </div>
           <div style="text-align: center; margin: 28px 0;">
-            <a href="http://localhost:5173"
+            <a href="https://ngo-connect-backend.onrender.com"
               style="background-color: #2d6a4f; color: #fff; padding: 14px 32px;
                      border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
               Get Started →

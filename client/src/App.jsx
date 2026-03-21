@@ -18,8 +18,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/home"                element={<PublicPortal />} />
-        <Route path="/"                    element={<Login />} />
+        <Route path="/"      element={<PublicPortal />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register"            element={<Register />} />
         <Route path="/donor-dashboard"     element={<DonorDashboard />} />
         <Route path="/ngo-dashboard"       element={<NGODashboard />} />

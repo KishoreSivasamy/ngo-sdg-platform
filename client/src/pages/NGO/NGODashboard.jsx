@@ -48,23 +48,25 @@ function NGODashboard() {
       <div style={styles.sidebar}>
         <h2 style={styles.logo}>🌍 NGO Connect</h2>
         <nav>
-          {[
-            { label: '📊 Dashboard',     active: true  },
-            { label: '👥 Volunteers',    active: false },
-            { label: '💰 Donations',     active: false },
-            { label: '📅 Events',        active: false },
-            { label: '📄 Documents',     active: false },
-            { label: '📈 Analytics',     active: false },
-            { label: '⚙️ Settings',      active: false },
-          ].map((item, i) => (
-            <div key={i} style={{
-              ...styles.navItem,
-              backgroundColor: item.active ? '#2d6a4f' : 'transparent',
-              color: item.active ? '#fff' : '#ccc'
-            }}>
-              {item.label}
-            </div>
-          ))}
+      {[
+  { label: '📊 Dashboard',  path: '/ngo-dashboard'  },
+  { label: '👥 Volunteers', path: '/ngo-dashboard'  },
+  { label: '💰 Donations',  path: '/donate'         },
+  { label: '📅 Events',     path: '/discover'       },
+  { label: '📄 Documents',  path: '/ngo-verify'     },
+  { label: '📈 Analytics',  path: '/analytics'      },
+  { label: '⚙️ Settings',   path: '/settings'       },
+].map((item, i) => (
+  <div key={i}
+    onClick={() => navigate(item.path)}
+    style={{
+      ...styles.navItem,
+      backgroundColor: item.path === '/ngo-dashboard' ? '#2d6a4f' : 'transparent',
+      color: item.path === '/ngo-dashboard' ? '#fff' : '#ccc'
+    }}>
+    {item.label}
+  </div>
+))}
         </nav>
         <button onClick={handleLogout} style={styles.logoutBtn}>
           🚪 Logout

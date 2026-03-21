@@ -42,20 +42,22 @@ function DonorDashboard() {
         <h2 style={styles.logo}>🌍 NGO Connect</h2>
         <nav>
           {[
-            { label: '📊 Dashboard',    active: true  },
-            { label: '🏛️ Browse NGOs',  active: false },
-            { label: '💰 My Donations', active: false },
-            { label: '📅 Events',       active: false },
-            { label: '⚙️ Settings',     active: false },
-          ].map((item, i) => (
-            <div key={i} style={{
-              ...styles.navItem,
-              backgroundColor: item.active ? '#2d6a4f' : 'transparent',
-              color: item.active ? '#fff' : '#ccc'
-            }}>
-              {item.label}
-            </div>
-          ))}
+  { label: '📊 Dashboard',    path: '/donor-dashboard' },
+  { label: '🏛️ Browse NGOs',  path: '/discover'        },
+  { label: '💰 My Donations', path: '/donate'           },
+  { label: '📅 Events',       path: '/discover'         },
+  { label: '⚙️ Settings',     path: '/settings'         },
+].map((item, i) => (
+  <div key={i}
+    onClick={() => navigate(item.path)}
+    style={{
+      ...styles.navItem,
+      backgroundColor: item.path === '/donor-dashboard' ? '#2d6a4f' : 'transparent',
+      color: item.path === '/donor-dashboard' ? '#fff' : '#ccc'
+    }}>
+    {item.label}
+  </div>
+))}
         </nav>
         <button onClick={handleLogout} style={styles.logoutBtn}>
           🚪 Logout

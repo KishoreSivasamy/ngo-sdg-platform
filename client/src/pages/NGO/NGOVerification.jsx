@@ -63,20 +63,22 @@ function NGOVerification() {
         <h2 style={styles.logo}>🌍 NGO Connect</h2>
         <nav>
           {[
-            { label: '📊 Dashboard',  path: '/ngo-dashboard'  },
-            { label: '📄 Verification', path: '/ngo-verify'  },
-            { label: '⚙️ Settings',   path: '/settings'      },
-          ].map((item, i) => (
-            <div key={i}
-              onClick={() => navigate(item.path)}
-              style={{
-                ...styles.navItem,
-                backgroundColor: item.label.includes('Verif') ? '#2d6a4f' : 'transparent',
-                color: item.label.includes('Verif') ? '#fff' : '#ccc'
-              }}>
-              {item.label}
-            </div>
-          ))}
+  { label: '📊 Dashboard', path: '/ngo-dashboard' },
+  { label: '📄 Verification', path: '/ngo-verify' },
+  { label: '💬 Live Chat',  path: '/chat'          },
+  { label: '🔍 Discover',   path: '/discover'      },
+  { label: '⚙️ Settings',   path: '/settings'      },
+].map((item, i) => (
+  <div key={i}
+    onClick={() => navigate(item.path)}
+    style={{
+      ...styles.navItem,
+      backgroundColor: item.path === '/ngo-verify' ? '#2d6a4f' : 'transparent',
+      color: item.path === '/ngo-verify' ? '#fff' : '#ccc'
+    }}>
+    {item.label}
+  </div>
+))}
         </nav>
         <button
           onClick={() => { localStorage.clear(); navigate('/') }}
@@ -89,19 +91,28 @@ function NGOVerification() {
       <div style={styles.main}>
 
         {/* Header */}
-        <div style={styles.header}>
-          <div>
-            <h1 style={styles.heading}>📄 NGO Verification</h1>
-            <p style={styles.subheading}>Upload documents to get your NGO verified</p>
-          </div>
-          <div style={{
-            ...styles.statusBadge,
-            backgroundColor: verified ? '#e8f5e9' : '#fff8e1',
-            color: verified ? '#2d6a4f' : '#f57f17'
-          }}>
-            {verified ? '✅ Verified' : '⏳ Pending Verification'}
-          </div>
-        </div>
+<div style={styles.header}>
+  <div>
+    <h1 style={styles.heading}>📄 NGO Verification</h1>
+    <p style={styles.subheading}>Upload documents to get your NGO verified</p>
+  </div>
+  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+    <div style={{
+      ...styles.statusBadge,
+      backgroundColor: verified ? '#e8f5e9' : '#fff8e1',
+      color: verified ? '#2d6a4f' : '#f57f17'
+    }}>
+      {verified ? '✅ Verified' : '⏳ Pending Verification'}
+    </div>
+    {localStorage.getItem('role') === 'admin' && (
+      <button
+        onClick={() => navigate('/admin')}
+        style={styles.adminBtn}>
+        ⚙️ Admin Panel
+      </button>
+    )}
+  </div>
+</div>
 
         {/* Progress Steps */}
         <div style={styles.steps}>
@@ -293,6 +304,16 @@ const styles = {
     width: '240px', backgroundColor: '#1b4332',
     padding: '24px 16px', display: 'flex',
     flexDirection: 'column', position: 'fixed', height: '100vh'
+  },
+  adminBtn: {
+  padding: '8px 16px',
+  backgroundColor: '#1565c0',
+  color: '#fff',
+  border: 'none',
+  borderRadius: '8px',
+  cursor: 'pointer',
+  fontSize: '13px',
+  fontWeight: '600'
   },
   logo: { color: '#fff', fontSize: '20px', marginBottom: '32px', textAlign: 'center' },
   navItem: {

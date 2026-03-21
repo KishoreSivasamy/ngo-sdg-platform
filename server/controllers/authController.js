@@ -46,3 +46,28 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: 'Server error' })
   }
 }
+
+// GET ALL USERS (Admin only)
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({}, '-password')
+    res.json(users)
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' })
+  }
+}
+
+// UPDATE USER ROLE (Admin only)
+exports.updateUserRole = async (req, res) => {
+  const { userId, role } = req.body
+  try {
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { role },
+      { new: true }
+    )
+    res.json({ message: 'Role updated', user })
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' })
+  }
+}

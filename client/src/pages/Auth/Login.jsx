@@ -1,6 +1,6 @@
+import API_URL from '../../config'
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import API_URL from '../../config'
 
 function Login() {
   const navigate = useNavigate()
@@ -18,7 +18,7 @@ function Login() {
     setError('')
 
     try {
-      const res = await fetch(`${API_URL}/api/auth/login`, {
+      const res = await fetch('https://ngo-connect-backend-mkg0.onrender.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -30,12 +30,11 @@ function Login() {
       } else {
         localStorage.setItem('token', data.token)
         localStorage.setItem('role', data.role)
-        localStorage.setItem('name', data.name)
 
-        if (data.role === 'admin')      navigate('/admin')
-        else if (data.role === 'ngo')   navigate('/ngo-dashboard')
-        else if (data.role === 'donor') navigate('/donor-dashboard')
-        else                            navigate('/volunteer-dashboard')
+        if (data.role === 'admin')          navigate('/admin')
+        else if (data.role === 'ngo')       navigate('/ngo-dashboard')
+        else if (data.role === 'donor')     navigate('/donor-dashboard')
+        else                                navigate('/volunteer-dashboard')
       }
     } catch (err) {
       setError('Server error. Please try again.')
@@ -128,7 +127,9 @@ const styles = {
     marginBottom: '16px',
     fontSize: '14px'
   },
-  inputGroup: { marginBottom: '18px' },
+  inputGroup: {
+    marginBottom: '18px'
+  },
   label: {
     display: 'block',
     marginBottom: '6px',

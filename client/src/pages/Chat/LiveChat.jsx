@@ -142,16 +142,19 @@ function LiveChat() {
         <h2 style={styles.logo}>🌍 NGO Connect</h2>
         <nav>
           {[
-            { label: '📊 Dashboard', path: '/ngo-dashboard'  },
-            { label: '💬 Live Chat', path: '/chat'           },
-            { label: '⚙️ Settings',  path: '/settings'       },
-          ].map((item, i) => (
+             { label: '📊 Dashboard', path: '/ngo-dashboard' },
+             { label: '💬 Live Chat', path: '/chat'           },
+             { label: '📄 Verify',    path: '/ngo-verify'     },
+             { label: '🔍 Discover',  path: '/discover'       },
+             { label: '📊 Analytics', path: '/analytics'      },
+             { label: '⚙️ Settings',  path: '/settings'       },
+             ].map((item, i) => (
             <div key={i}
               onClick={() => navigate(item.path)}
               style={{
                 ...styles.navItem,
-                backgroundColor: item.label.includes('Chat') ? '#2d6a4f' : 'transparent',
-                color: item.label.includes('Chat') ? '#fff' : '#ccc'
+                backgroundColor: item.path === '/chat' ? '#2d6a4f' : 'transparent',
+                color: item.path === '/chat' ? '#fff' : '#ccc'
               }}>
               {item.label}
             </div>

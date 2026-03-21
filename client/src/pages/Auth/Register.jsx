@@ -1,17 +1,11 @@
-import API_URL from '../../config'
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import API_URL from '../../config'
 
-function Register() {
+function Login() {
   const navigate = useNavigate()
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    role: 'donor'
-  })
+  const [formData, setFormData] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleChange = (e) => {
@@ -22,10 +16,9 @@ function Register() {
     e.preventDefault()
     setLoading(true)
     setError('')
-    setSuccess('')
 
     try {
-      const res = await fetch('https://ngo-connect-backend-mkg0.onrender.com/api/auth/register', {
+      const res = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -33,10 +26,16 @@ function Register() {
       const data = await res.json()
 
       if (!res.ok) {
-        setError(data.message || 'Registration failed')
+        setError(data.message || 'Login failed')
       } else {
-        setSuccess('Account created! Redirecting to login...')
-        setTimeout(() => navigate('/'), 2000)
+        localStorage.setItem('token', data.token)
+        localStorage.setItem('role', data.role)
+        localStorage.setItem('name', data.name)
+
+        if (data.role === 'admin')          navigate('/admin')
+        else if (data.role === 'ngo')       navigate('/ngo-dashboard')
+        else if (data.role === 'donor')     navigate('/donor-dashboard')
+        else                                navigate('/volunteer-dashboard')
       }
     } catch (err) {
       setError('Server error. Please try again.')
@@ -48,25 +47,11 @@ function Register() {
     <div style={styles.wrapper}>
       <div style={styles.card}>
         <h2 style={styles.title}>🌍 NGO Connect</h2>
-        <p style={styles.subtitle}>Create your account</p>
+        <p style={styles.subtitle}>Sign in to your account</p>
 
-        {error   && <p style={styles.error}>{error}</p>}
-        {success && <p style={styles.success}>{success}</p>}
+        {error && <p style={styles.error}>{error}</p>}
 
         <form onSubmit={handleSubmit}>
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Full Name</label>
-            <input
-              type="text"
-              name="name"
-              placeholder="Enter your full name"
-              value={formData.name}
-              onChange={handleChange}
-              style={styles.input}
-              required
-            />
-          </div>
-
           <div style={styles.inputGroup}>
             <label style={styles.label}>Email</label>
             <input
@@ -85,7 +70,7 @@ function Register() {
             <input
               type="password"
               name="password"
-              placeholder="Create a password"
+              placeholder="Enter your password"
               value={formData.password}
               onChange={handleChange}
               style={styles.input}
@@ -93,28 +78,14 @@ function Register() {
             />
           </div>
 
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Register as</label>
-            <select
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              style={styles.input}
-            >
-              <option value="donor">Donor</option>
-              <option value="ngo">NGO</option>
-              <option value="volunteer">Volunteer</option>
-            </select>
-          </div>
-
           <button type="submit" style={styles.button} disabled={loading}>
-            {loading ? 'Creating account...' : 'Register'}
+            {loading ? 'Signing in...' : 'Login'}
           </button>
         </form>
 
         <p style={styles.footerText}>
-          Already have an account?{' '}
-          <Link to="/" style={styles.link}>Login here</Link>
+          Don't have an account?{' '}
+          <Link to="/register" style={styles.link}>Register here</Link>
         </p>
       </div>
     </div>
@@ -157,17 +128,7 @@ const styles = {
     marginBottom: '16px',
     fontSize: '14px'
   },
-  success: {
-    backgroundColor: '#e0f7e9',
-    color: '#2d6a4f',
-    padding: '10px',
-    borderRadius: '6px',
-    marginBottom: '16px',
-    fontSize: '14px'
-  },
-  inputGroup: {
-    marginBottom: '18px'
-  },
+  inputGroup: { marginBottom: '18px' },
   label: {
     display: 'block',
     marginBottom: '6px',
@@ -208,4 +169,4 @@ const styles = {
   }
 }
 
-export default Register 
+export default Login

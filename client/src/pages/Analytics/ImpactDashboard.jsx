@@ -76,22 +76,30 @@ function ImpactDashboard() {
       <div style={styles.sidebar}>
         <h2 style={styles.logo}>🌍 NGO Connect</h2>
         <nav>
-          {[
-            { label: '📊 Overview',    tab: 'overview'  },
-            { label: '🌍 SDG Progress', tab: 'sdg'      },
-            { label: '🏆 Top NGOs',    tab: 'top'       },
-            { label: '📈 Trends',      tab: 'trends'    },
-          ].map((item, i) => (
-            <div key={i}
-              onClick={() => setActiveTab(item.tab)}
-              style={{
-                ...styles.navItem,
-                backgroundColor: activeTab === item.tab ? '#2d6a4f' : 'transparent',
-                color: activeTab === item.tab ? '#fff' : '#ccc'
-              }}>
-              {item.label}
-            </div>
-          ))}
+         {[
+  { label: '📊 Overview',     path: '/analytics' },
+  { label: '🌍 SDG Progress', path: '/analytics' },
+  { label: '🏆 Top NGOs',     path: '/analytics' },
+  { label: '📈 Trends',       path: '/analytics' },
+].map((item, i) => (
+  <div key={i}
+    onClick={() => setActiveTab(
+      item.label.includes('Overview') ? 'overview' :
+      item.label.includes('SDG')      ? 'sdg'      :
+      item.label.includes('Top')      ? 'top'      : 'trends'
+    )}
+    style={{
+      ...styles.navItem,
+      backgroundColor: activeTab === (
+        item.label.includes('Overview') ? 'overview' :
+        item.label.includes('SDG')      ? 'sdg'      :
+        item.label.includes('Top')      ? 'top'      : 'trends'
+      ) ? '#2d6a4f' : 'transparent',
+      color: '#ccc'
+    }}>
+    {item.label}
+  </div>
+))}
         </nav>
         <button onClick={() => navigate('/')} style={styles.logoutBtn}>
           🚪 Logout

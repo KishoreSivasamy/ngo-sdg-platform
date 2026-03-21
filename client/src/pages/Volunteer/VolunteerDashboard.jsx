@@ -58,22 +58,22 @@ function VolunteerDashboard() {
         <h2 style={styles.logo}>🌍 NGO Connect</h2>
         <nav>
           {[
-            { label: '📊 Dashboard',      tab: 'dashboard'  },
-            { label: '📅 My Events',      tab: 'myevents'   },
-            { label: '🔍 Find Events',    tab: 'find'       },
-            { label: '🏆 My History',     tab: 'history'    },
-            { label: '⚙️ Settings',       tab: 'settings'   },
-          ].map((item, i) => (
-            <div key={i}
-              onClick={() => setActiveTab(item.tab)}
-              style={{
-                ...styles.navItem,
-                backgroundColor: activeTab === item.tab ? '#2d6a4f' : 'transparent',
-                color: activeTab === item.tab ? '#fff' : '#ccc'
-              }}>
-              {item.label}
-            </div>
-          ))}
+  { label: '📊 Dashboard',   tab: 'dashboard', path: null },
+  { label: '📅 My Events',   tab: 'myevents',  path: null },
+  { label: '🔍 Find Events', tab: 'find',      path: null },
+  { label: '🏆 My History',  tab: 'history',   path: null },
+  { label: '⚙️ Settings',    tab: null,        path: '/settings' },
+].map((item, i) => (
+  <div key={i}
+    onClick={() => item.path ? navigate(item.path) : setActiveTab(item.tab)}
+    style={{
+      ...styles.navItem,
+      backgroundColor: activeTab === item.tab ? '#2d6a4f' : 'transparent',
+      color: activeTab === item.tab ? '#fff' : '#ccc'
+    }}>
+    {item.label}
+  </div>
+))}
         </nav>
         <button onClick={handleLogout} style={styles.logoutBtn}>
           🚪 Logout

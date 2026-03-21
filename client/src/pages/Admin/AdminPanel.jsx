@@ -59,24 +59,24 @@ function AdminPanel() {
         <h2 style={styles.logo}>⚙️ Admin Panel</h2>
         <nav>
           {[
-            { label: '📊 Dashboard',      tab: 'dashboard'  },
-            { label: '🏛️ NGO Approvals',  tab: 'ngos'       },
-            { label: '👥 Users',          tab: 'users'      },
-            { label: '💰 Donations',      tab: 'donations'  },
-            { label: '📅 Events',         tab: 'events'     },
-            { label: '📈 Analytics',      tab: 'analytics'  },
-            { label: '⚙️ Settings',       tab: 'settings'   },
-          ].map((item, i) => (
-            <div key={i}
-              onClick={() => setActiveTab(item.tab)}
-              style={{
-                ...styles.navItem,
-                backgroundColor: activeTab === item.tab ? '#2d6a4f' : 'transparent',
-                color: activeTab === item.tab ? '#fff' : '#ccc'
-              }}>
-              {item.label}
-            </div>
-          ))}
+  { label: '📊 Dashboard',     tab: 'dashboard', path: null     },
+  { label: '🏛️ NGO Approvals', tab: 'ngos',      path: null     },
+  { label: '👥 Users',         tab: 'users',     path: null     },
+  { label: '💰 Donations',     tab: 'donations', path: null     },
+  { label: '📅 Events',        tab: 'events',    path: null     },
+  { label: '📈 Analytics',     tab: null,        path: '/analytics' },
+  { label: '⚙️ Settings',      tab: null,        path: '/settings'  },
+].map((item, i) => (
+  <div key={i}
+    onClick={() => item.path ? navigate(item.path) : setActiveTab(item.tab)}
+    style={{
+      ...styles.navItem,
+      backgroundColor: activeTab === item.tab ? '#2d6a4f' : 'transparent',
+      color: activeTab === item.tab ? '#fff' : '#ccc'
+    }}>
+    {item.label}
+  </div>
+))}
         </nav>
         <button onClick={handleLogout} style={styles.logoutBtn}>
           🚪 Logout

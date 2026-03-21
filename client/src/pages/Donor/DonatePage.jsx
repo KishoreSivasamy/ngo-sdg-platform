@@ -144,19 +144,21 @@ function DonatePage() {
         <h2 style={styles.logo}>🌍 NGO Connect</h2>
         <nav>
           {[
-            { label: '📊 Dashboard', path: '/donor-dashboard' },
-            { label: '💰 Donate',    path: '/donate'          },
-            { label: '🔍 Discover',  path: '/discover'        },
-            { label: '⚙️ Settings',  path: '/settings'        },
-          ].map((item, i) => (
-            <div key={i} onClick={() => navigate(item.path)} style={{
-              ...styles.navItem,
-              backgroundColor: item.label.includes('Donate') ? '#2d6a4f' : 'transparent',
-              color: item.label.includes('Donate') ? '#fff' : '#ccc'
-            }}>
-              {item.label}
-            </div>
-          ))}
+  { label: '📊 Dashboard', path: '/donor-dashboard' },
+  { label: '💰 Donate',    path: '/donate'           },
+  { label: '🔍 Discover',  path: '/discover'         },
+  { label: '⚙️ Settings',  path: '/settings'         },
+].map((item, i) => (
+  <div key={i}
+    onClick={() => navigate(item.path)}
+    style={{
+      ...styles.navItem,
+      backgroundColor: item.path === '/donate' ? '#2d6a4f' : 'transparent',
+      color: item.path === '/donate' ? '#fff' : '#ccc'
+    }}>
+    {item.label}
+  </div>
+))}
         </nav>
         <button
           onClick={() => { localStorage.clear(); navigate('/') }}

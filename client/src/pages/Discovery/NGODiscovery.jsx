@@ -47,19 +47,21 @@ function NGODiscovery() {
         <h2 style={styles.logo}>🌍 NGO Connect</h2>
         <nav>
           {[
-            { label: '🔍 Discover NGOs', active: true  },
-            { label: '📅 Events',        active: false },
-            { label: '💰 Donate',        active: false },
-            { label: '👤 My Profile',    active: false },
-          ].map((item, i) => (
-            <div key={i} style={{
-              ...styles.navItem,
-              backgroundColor: item.active ? '#2d6a4f' : 'transparent',
-              color: item.active ? '#fff' : '#ccc'
-            }}>
-              {item.label}
-            </div>
-          ))}
+  { label: '🔍 Discover NGOs', path: '/discover'        },
+  { label: '📅 Events',        path: '/discover'        },
+  { label: '💰 Donate',        path: '/donate'          },
+  { label: '👤 My Profile',    path: '/settings'        },
+].map((item, i) => (
+  <div key={i}
+    onClick={() => navigate(item.path)}
+    style={{
+      ...styles.navItem,
+      backgroundColor: item.path === '/discover' ? '#2d6a4f' : 'transparent',
+      color: item.path === '/discover' ? '#fff' : '#ccc'
+    }}>
+    {item.label}
+  </div>
+))}
         </nav>
         <button
           onClick={() => navigate('/')}

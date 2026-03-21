@@ -100,7 +100,7 @@ function PublicPortal() {
         </div>
 
         <div style={styles.navBtns}>
-          <button onClick={() => navigate('/')}         style={styles.loginBtn}>Login</button>
+          <button onClick={() => navigate('/login')}    style={styles.loginBtn}>Login</button>
           <button onClick={() => navigate('/register')} style={styles.registerBtn}>Get Started</button>
         </div>
 
@@ -122,7 +122,7 @@ function PublicPortal() {
               {link.label}
             </a>
           ))}
-          <button onClick={() => navigate('/')}         style={styles.mobilLoginBtn}>Login</button>
+          <button onClick={() => navigate('/login')}style={styles.mobilLoginBtn}>Login</button>
           <button onClick={() => navigate('/register')} style={styles.mobileRegBtn}>Get Started</button>
         </div>
       )}

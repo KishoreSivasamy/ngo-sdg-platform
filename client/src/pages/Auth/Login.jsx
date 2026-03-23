@@ -1,6 +1,6 @@
 import API_URL from '../../config'
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 
 function Login() {
   const navigate = useNavigate()
@@ -83,9 +83,13 @@ function Login() {
         </form>
 
         <p style={styles.footerText}>
-          Don't have an account?{' '}
-          <Link to="/register" style={styles.link}>Register here</Link>
-        </p>
+  Don't have an account?{' '}
+  <span
+    onClick={() => navigate('/register')}
+    style={styles.link}>
+    Register here
+  </span>
+</p>
       </div>
     </div>
   )

@@ -29,6 +29,8 @@ function Login() {
       } else {
         localStorage.setItem('token', data.token)
         localStorage.setItem('role', data.role)
+        localStorage.setItem('name', data.role)
+
 
         if (data.role === 'admin')          navigate('/admin')
         else if (data.role === 'ngo')       navigate('/ngo-dashboard')

@@ -1,11 +1,16 @@
 import { useState } from 'react'
-import { useNavigate} from 'react-router-dom'
-import API_URL from '../../config'
+import { useNavigate, Link } from 'react-router-dom'
 
-function Login() {
+function Register() {
   const navigate = useNavigate()
-  const [formData, setFormData] = useState({ email: '', password: '' })
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    role: 'donor'
+  })
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleChange = (e) => {
@@ -16,9 +21,10 @@ function Login() {
     e.preventDefault()
     setLoading(true)
     setError('')
+    setSuccess('')
 
     try {
-      const res = await fetch(`${API_URL}/api/auth/login`, {
+      const res = await fetch('http://localhost:5000/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -26,16 +32,10 @@ function Login() {
       const data = await res.json()
 
       if (!res.ok) {
-        setError(data.message || 'Login failed')
+        setError(data.message || 'Registration failed')
       } else {
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('role', data.role)
-        localStorage.setItem('name', data.name)
-
-        if (data.role === 'admin')          navigate('/admin')
-        else if (data.role === 'ngo')       navigate('/ngo-dashboard')
-        else if (data.role === 'donor')     navigate('/donor-dashboard')
-        else                                navigate('/volunteer-dashboard')
+        setSuccess('Account created! Redirecting to login...')
+        setTimeout(() => navigate('/'), 2000)
       }
     } catch (err) {
       setError('Server error. Please try again.')
@@ -46,20 +46,26 @@ function Login() {
   return (
     <div style={styles.wrapper}>
       <div style={styles.card}>
-
-        {/* Back to home */}
-        <button
-          onClick={() => navigate('/')}
-          style={styles.backBtn}>
-          ← Back to Home
-        </button>
-
         <h2 style={styles.title}>🌍 NGO Connect</h2>
-        <p style={styles.subtitle}>Sign in to your account</p>
+        <p style={styles.subtitle}>Create your account</p>
 
-        {error && <p style={styles.error}>{error}</p>}
+        {error   && <p style={styles.error}>{error}</p>}
+        {success && <p style={styles.success}>{success}</p>}
 
         <form onSubmit={handleSubmit}>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Full Name</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter your full name"
+              value={formData.name}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
+          </div>
+
           <div style={styles.inputGroup}>
             <label style={styles.label}>Email</label>
             <input
@@ -78,7 +84,7 @@ function Login() {
             <input
               type="password"
               name="password"
-              placeholder="Enter your password"
+              placeholder="Create a password"
               value={formData.password}
               onChange={handleChange}
               style={styles.input}
@@ -86,20 +92,29 @@ function Login() {
             />
           </div>
 
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Register as</label>
+            <select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              style={styles.input}
+            >
+              <option value="donor">Donor</option>
+              <option value="ngo">NGO</option>
+              <option value="volunteer">Volunteer</option>
+            </select>
+          </div>
+
           <button type="submit" style={styles.button} disabled={loading}>
-            {loading ? 'Signing in...' : 'Login'}
+            {loading ? 'Creating account...' : 'Register'}
           </button>
         </form>
 
         <p style={styles.footerText}>
-  Already have an account?{' '}
-  <span
-    onClick={() => navigate('/login')}
-    style={styles.link}>
-    Login here
-  </span>
-</p>
-
+          Already have an account?{' '}
+          <Link to="/" style={styles.link}>Login here</Link>
+        </p>
       </div>
     </div>
   )
@@ -121,16 +136,6 @@ const styles = {
     width: '100%',
     maxWidth: '420px'
   },
-  backBtn: {
-    backgroundColor: 'transparent',
-    border: 'none',
-    color: '#2d6a4f',
-    fontSize: '14px',
-    cursor: 'pointer',
-    marginBottom: '16px',
-    padding: '0',
-    fontWeight: '600'
-  },
   title: {
     textAlign: 'center',
     fontSize: '26px',
@@ -151,7 +156,17 @@ const styles = {
     marginBottom: '16px',
     fontSize: '14px'
   },
-  inputGroup: { marginBottom: '18px' },
+  success: {
+    backgroundColor: '#e0f7e9',
+    color: '#2d6a4f',
+    padding: '10px',
+    borderRadius: '6px',
+    marginBottom: '16px',
+    fontSize: '14px'
+  },
+  inputGroup: {
+    marginBottom: '18px'
+  },
   label: {
     display: 'block',
     marginBottom: '6px',
@@ -192,4 +207,4 @@ const styles = {
   }
 }
 
-export default Login
+export default Register

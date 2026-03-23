@@ -1,4 +1,3 @@
-import API_URL from '../../config'
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 
@@ -18,7 +17,7 @@ function Login() {
     setError('')
 
     try {
-      const res = await fetch('https://ngo-connect-backend-mkg0.onrender.com/api/auth/login', {
+      const res = await fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -83,13 +82,9 @@ function Login() {
         </form>
 
         <p style={styles.footerText}>
-  Don't have an account?{' '}
-  <span
-    onClick={() => navigate('/register')}
-    style={styles.link}>
-    Register here
-  </span>
-</p>
+          Don't have an account?{' '}
+          <Link to="/register" style={styles.link}>Register here</Link>
+        </p>
       </div>
     </div>
   )

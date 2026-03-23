@@ -46,6 +46,14 @@ function Login() {
   return (
     <div style={styles.wrapper}>
       <div style={styles.card}>
+
+        {/* Back to home */}
+        <button
+          onClick={() => navigate('/')}
+          style={styles.backBtn}>
+          ← Back to Home
+        </button>
+
         <h2 style={styles.title}>🌍 NGO Connect</h2>
         <p style={styles.subtitle}>Sign in to your account</p>
 
@@ -87,6 +95,7 @@ function Login() {
           Don't have an account?{' '}
           <Link to="/register" style={styles.link}>Register here</Link>
         </p>
+
       </div>
     </div>
   )
@@ -107,6 +116,16 @@ const styles = {
     boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
     width: '100%',
     maxWidth: '420px'
+  },
+  backBtn: {
+    backgroundColor: 'transparent',
+    border: 'none',
+    color: '#2d6a4f',
+    fontSize: '14px',
+    cursor: 'pointer',
+    marginBottom: '16px',
+    padding: '0',
+    fontWeight: '600'
   },
   title: {
     textAlign: 'center',

@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import API_URL from '../../config'
 
 function Register() {
   const navigate = useNavigate()
@@ -24,7 +25,7 @@ function Register() {
     setSuccess('')
 
     try {
-      const res = await fetch('https://ngo-connect-backend-mkg0.onrender.com/api/auth/register', {
+      const res = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -35,7 +36,7 @@ function Register() {
         setError(data.message || 'Registration failed')
       } else {
         setSuccess('Account created! Redirecting to login...')
-        setTimeout(() => navigate('/'), 2000)
+        setTimeout(() => navigate('/login'), 2000)
       }
     } catch (err) {
       setError('Server error. Please try again.')
@@ -46,6 +47,14 @@ function Register() {
   return (
     <div style={styles.wrapper}>
       <div style={styles.card}>
+
+        {/* Back to home */}
+        <button
+          onClick={() => navigate('/')}
+          style={styles.backBtn}>
+          ← Back to Home
+        </button>
+
         <h2 style={styles.title}>🌍 NGO Connect</h2>
         <p style={styles.subtitle}>Create your account</p>
 
@@ -113,8 +122,13 @@ function Register() {
 
         <p style={styles.footerText}>
           Already have an account?{' '}
-          <Link to="/" style={styles.link}>Login here</Link>
+          <span
+            onClick={() => navigate('/login')}
+            style={styles.link}>
+            Login here
+          </span>
         </p>
+
       </div>
     </div>
   )
@@ -135,6 +149,16 @@ const styles = {
     boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
     width: '100%',
     maxWidth: '420px'
+  },
+  backBtn: {
+    backgroundColor: 'transparent',
+    border: 'none',
+    color: '#2d6a4f',
+    fontSize: '14px',
+    cursor: 'pointer',
+    marginBottom: '16px',
+    padding: '0',
+    fontWeight: '600'
   },
   title: {
     textAlign: 'center',
@@ -164,9 +188,7 @@ const styles = {
     marginBottom: '16px',
     fontSize: '14px'
   },
-  inputGroup: {
-    marginBottom: '18px'
-  },
+  inputGroup: { marginBottom: '18px' },
   label: {
     display: 'block',
     marginBottom: '6px',
@@ -203,7 +225,8 @@ const styles = {
   link: {
     color: '#2d6a4f',
     fontWeight: '600',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    cursor: 'pointer'
   }
 }
 
